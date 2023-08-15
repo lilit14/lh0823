@@ -18,4 +18,8 @@ public class RentalAgreementException extends RuntimeException {
         super(message);
         this.name = name;
     }
+
+    public RentalAgreementException() {
+    }
+
 }
