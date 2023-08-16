@@ -47,6 +47,8 @@ public class RentalAgreement {
   @NotNull private BigDecimal preDiscountCharge;
   @NotNull private BigDecimal discountAmount;
   @NotNull private BigDecimal finalCharge;
+  
+  @NotNull private Boolean isReturned;
 
   public String getDiscountPercentFormatted() {
     return discountPercent + "%";
@@ -76,7 +78,8 @@ public class RentalAgreement {
         chargeDays,
         preDiscountCharge,
         discountAmount,
-        finalCharge);
+        finalCharge,
+        isReturned);
   }
 
   @Override
@@ -93,7 +96,8 @@ public class RentalAgreement {
         && Objects.equals(chargeDays, rentalAgreement.chargeDays)
         && Objects.equals(preDiscountCharge, rentalAgreement.preDiscountCharge)
         && Objects.equals(discountAmount, rentalAgreement.discountAmount)
-        && Objects.equals(finalCharge, rentalAgreement.finalCharge);
+        && Objects.equals(finalCharge, rentalAgreement.finalCharge)
+        && Objects.equals(isReturned, rentalAgreement.isReturned);
   }
 
   @Override
@@ -122,6 +126,8 @@ public class RentalAgreement {
         + "\n\tDiscount amount: "
         + this.getDiscountAmountFormatted()
         + "\n\tFinal charge: "
-        + this.getFinalChargeFormatted();
+        + this.getFinalChargeFormatted()
+        + "\n\tIs returned: "
+        + this.isReturned;
   }
 }

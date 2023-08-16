@@ -32,6 +32,8 @@ public class Tool {
     @NotBlank
     @NotNull
     private String brand;
+    @NotNull
+    private Integer availableAmount;
 
     @Override
     public String toString() {
@@ -40,12 +42,13 @@ public class Tool {
                 ", code='" + code + '\'' +
                 ", type='" + type + '\'' +
                 ", brand='" + brand + '\'' +
+                ", availableAmount='" + availableAmount + '\'' +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, type, brand);
+        return Objects.hash(id, code, type, brand,availableAmount);
     }
 
     @Override

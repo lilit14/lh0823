@@ -1,5 +1,6 @@
 package com.pos.service.toolsRentalSystem.payloads.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class ToolRequest {
     private String brand;
 
     @NotNull
+    @Min(0)
     private Integer availableAmount;
-
 
 }

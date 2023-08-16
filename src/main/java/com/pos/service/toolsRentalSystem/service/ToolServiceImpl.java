@@ -29,6 +29,7 @@ public class ToolServiceImpl implements ToolService {
         tool.setCode(request.getCode());
         tool.setType(toolTypeRepository.findByNameEquals(request.getType()));
         tool.setBrand(request.getBrand());
+        tool.setAvailableAmount(request.getAvailableAmount());
         return toolRepository.save(tool);
     }
 

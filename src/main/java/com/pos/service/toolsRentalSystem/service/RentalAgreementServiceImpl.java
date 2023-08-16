@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RentalAgreementServiceImpl implements RentalAgreementService {
@@ -30,6 +32,7 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
 
 
     @Override
+    @Transactional
     public RentalAgreement create(RentalAgreementRequest request) throws RentalAgreementException {
         if (request.getRentalDayCount() < 1) {
             throw new RentalAgreementException("Invalid rental day count.", "Rental day count must be 1 or greater.");
@@ -41,9 +44,13 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
 
         Tool tool = toolRepository.findByCodeEquals(request.getToolCode());
         if (tool == null){
-            throw new RentalAgreementException("Unknown tool type", "Could not find a tool type by the given type.");
+            throw new RentalAgreementException("Unknown tool code", "Could not find a tool by the given code.");
         }
-
+        if(tool.getAvailableAmount()<1){
+            throw new RentalAgreementException("Tool out od stock", "The tool by the given code is out of the stock.");
+        }
+        tool.setAvailableAmount(tool.getAvailableAmount()-1);
+        toolRepository.save(tool);
         rentalAgreement.setTool(tool);
         Integer rentalDayCount = request.getRentalDayCount();
         rentalAgreement.setRentalDayCount(rentalDayCount);
@@ -63,6 +70,7 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
                 setScale(DECIMAL_COUNT, ROUND_MODE);
         rentalAgreement.setDiscountAmount(discountAmount);
         rentalAgreement.setFinalCharge(preDiscountCharge.subtract(discountAmount));
+        rentalAgreement.setIsReturned(false);
         return rentalAgreementRepository.save(rentalAgreement);
     }
 
@@ -132,6 +140,23 @@ public class RentalAgreementServiceImpl implements RentalAgreementService {
     @Override
     public List<RentalAgreement> getAll() {
         return rentalAgreementRepository.findAll();
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    @Transactional
+    public void computePrice() throws InterruptedException {
+
+        List<RentalAgreement> rentalAgreements = rentalAgreementRepository.
+                findByIsReturnedAndDueDateLessThan(false, LocalDate.now());
+
+        for(RentalAgreement rentalAgreement:rentalAgreements){
+            Tool tool = rentalAgreement.getTool();
+            tool.setAvailableAmount(tool.getAvailableAmount()+1);
+            toolRepository.save(tool);
+            rentalAgreement.setIsReturned(true);
+            rentalAgreementRepository.save(rentalAgreement);
+  
+        }
     }
 }
 
