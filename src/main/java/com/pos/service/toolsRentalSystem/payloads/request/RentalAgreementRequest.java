@@ -11,21 +11,14 @@ import lombok.Setter;
 @Setter
 public class RentalAgreementRequest {
 
-    @NotBlank
-    @NotNull
-    private String toolCode;
+    @NotBlank @NotNull private String toolCode;
 
-    @NotBlank
-    @NotNull
-    private int rentalDayCount;
+    @NotBlank @NotNull private Integer rentalDayCount;
 
-    @NotBlank
-    @NotNull
-    private int discountPercent;
+    @NotBlank @NotNull private Integer discountPercent;
 
     @NotBlank
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "M/d/yy")
     private LocalDate checkoutDate;
-
 }

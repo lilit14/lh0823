@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ToolRepository extends JpaRepository<Tool, UUID> {
     Tool findByCodeEquals(String code);
-
 }
-

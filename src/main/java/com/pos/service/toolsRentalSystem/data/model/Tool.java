@@ -22,33 +22,43 @@ public class Tool {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Setter(AccessLevel.NONE)
     private UUID id;
+
     @NotBlank
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     private String code;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "toolTypeId", referencedColumnName = "id")
     private ToolType type;
-    @NotBlank
-    @NotNull
-    private String brand;
-    @NotNull
-    private Integer availableAmount;
+
+    @NotBlank @NotNull private String brand;
+
+    @NotNull private Integer availableAmount;
 
     @Override
     public String toString() {
-        return "Tool{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", type='" + type + '\'' +
-                ", brand='" + brand + '\'' +
-                ", availableAmount='" + availableAmount + '\'' +
-                '}';
+        return "Tool{"
+                + "id="
+                + id
+                + ", code='"
+                + code
+                + '\''
+                + ", type='"
+                + type
+                + '\''
+                + ", brand='"
+                + brand
+                + '\''
+                + ", availableAmount='"
+                + availableAmount
+                + '\''
+                + '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, type, brand,availableAmount);
+        return Objects.hash(id, code, type, brand, availableAmount);
     }
 
     @Override
@@ -56,9 +66,9 @@ public class Tool {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Tool tool = (Tool) object;
-        return Objects.equals(id, tool.id) &&
-                type.equals(tool.type) &&
-                code.equals(tool.getCode()) &&
-                brand.equals(tool.getBrand());
+        return Objects.equals(id, tool.id)
+                && type.equals(tool.type)
+                && code.equals(tool.getCode())
+                && brand.equals(tool.getBrand());
     }
 }

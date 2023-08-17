@@ -18,4 +18,3 @@ public interface HolidayService {
 
     List<Holiday> getAll();
 }
-

@@ -10,20 +10,13 @@ import lombok.Setter;
 @Getter
 public class ToolRequest {
 
-    @NotBlank
-    @NotNull
-    private String code;
+    @NotBlank @NotNull private String code;
 
-    @NotBlank
-    @NotNull
-    private String type;
+    @NotBlank @NotNull private String type;
 
-    @NotNull
-    @NotBlank
-    private String brand;
+    @NotNull @NotBlank private String brand;
 
     @NotNull
     @Min(0)
     private Integer availableAmount;
-
 }

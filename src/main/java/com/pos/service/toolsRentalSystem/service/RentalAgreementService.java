@@ -17,4 +17,3 @@ public interface RentalAgreementService {
 
     List<RentalAgreement> getAll();
 }
-

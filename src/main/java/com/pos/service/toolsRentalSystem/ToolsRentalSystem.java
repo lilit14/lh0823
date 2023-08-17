@@ -8,15 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class ToolsRentalSystem {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ToolsRentalSystem.class, args);
-
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(ToolsRentalSystem.class, args);
+    }
 }
-
-
-
-
-
-

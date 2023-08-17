@@ -1,4 +1,4 @@
-package com.pos.service.toolsRentalSystem.service;
+package com.pos.service.toolsRentalSystem.service.implementation;
 
 import com.pos.service.toolsRentalSystem.data.model.FixedDateHoliday;
 import com.pos.service.toolsRentalSystem.data.model.FloatingDateHoliday;
@@ -6,6 +6,7 @@ import com.pos.service.toolsRentalSystem.data.model.Holiday;
 import com.pos.service.toolsRentalSystem.data.repository.HolidayRepository;
 import com.pos.service.toolsRentalSystem.exceptions.ResourceNotFoundException;
 import com.pos.service.toolsRentalSystem.payloads.request.HolidayRequest;
+import com.pos.service.toolsRentalSystem.service.HolidayService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,30 +15,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class HolidayServiceImpl implements HolidayService {
 
-    @Autowired
-    HolidayRepository holidayRepository;
-
+    @Autowired private HolidayRepository holidayRepository;
 
     @Override
     public Holiday createFloatingDateHoliday(HolidayRequest request) {
-        FloatingDateHoliday floatingDateHoliday = new FloatingDateHoliday();
-        floatingDateHoliday.setName(request.getName());
-        floatingDateHoliday.setWeekDay(request.getWeekDay());
-        floatingDateHoliday.setWeekNumber(request.getWeekNumber());
-        floatingDateHoliday.setMonth(request.getMonth());
-        return holidayRepository.save(floatingDateHoliday);
+        return holidayRepository.save(
+                new FloatingDateHoliday(
+                        request.getName(),
+                        request.getDayOfWeek(),
+                        request.getWeekNumber(),
+                        request.getMonth()));
     }
 
     @Override
     public Holiday createFixedDateHoliday(HolidayRequest request) {
-        FixedDateHoliday fixedDateHoliday = new FixedDateHoliday();
-        fixedDateHoliday.setName(request.getName());
-        fixedDateHoliday.setDay(request.getDay());
-        fixedDateHoliday.setMonth(request.getMonth());
-        fixedDateHoliday.setIsObservedHoliday(request.getIsObservedHoliday());
-        return holidayRepository.save(fixedDateHoliday);
+        return holidayRepository.save(
+                new FixedDateHoliday(
+                        request.getName(),
+                        request.getDay(),
+                        request.getMonth(),
+                        request.getIsObservedHoliday()));
     }
-
 
     @Override
     public void delete(UUID id) {
@@ -48,7 +46,9 @@ public class HolidayServiceImpl implements HolidayService {
 
     @Override
     public Holiday get(UUID id) {
-        return holidayRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Holiday", "id", id));
+        return holidayRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Holiday", "id", id));
     }
 
     @Override
@@ -56,4 +56,3 @@ public class HolidayServiceImpl implements HolidayService {
         return holidayRepository.findAll();
     }
 }
-

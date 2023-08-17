@@ -9,16 +9,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ToolTypeRequest {
-    @NotNull
-    public Boolean weekendCharge;
-    @NotNull
-    public Boolean holidayCharge;
-    @NotBlank
-    @NotNull
-    private String name;
-    @NotNull
-    private BigDecimal dailyCharge;
-    @NotNull
-    private Boolean weekdayCharge;
-
+    @NotNull public Boolean weekendCharge;
+    @NotNull public Boolean holidayCharge;
+    @NotBlank @NotNull private String name;
+    @NotNull private BigDecimal dailyCharge;
+    @NotNull private Boolean weekdayCharge;
 }

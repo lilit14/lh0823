@@ -23,12 +23,12 @@ public abstract class Holiday {
     @Column(columnDefinition = "VARCHAR(36)")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Setter(AccessLevel.NONE)
-    private UUID id;
+    protected UUID id;
 
     @NotBlank
     @NotNull
-    @Column(unique=true)
-    private String name;
+    @Column(unique = true)
+    protected String name;
 
     public Holiday(String name) {
         this.name = name;
@@ -38,23 +38,11 @@ public abstract class Holiday {
 
     @Override
     public String toString() {
-        return "Holiday{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Holiday{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Holiday holiday = (Holiday) object;
-        return Objects.equals(id, holiday.id) &&
-                name.equals(holiday.name);
     }
 }

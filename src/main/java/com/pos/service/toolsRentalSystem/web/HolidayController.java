@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/holiday")
-
 public class HolidayController {
-    @Autowired
-    HolidayService holidayService;
-
+    @Autowired private HolidayService holidayService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Holiday>> getAll() {
@@ -43,10 +40,10 @@ public class HolidayController {
         return new ResponseEntity<>(holiday, HttpStatus.CREATED);
     }
 
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") UUID id) {
         holidayService.delete(id);
-        return new ResponseEntity<>(new MessageResponse("Successfully deleted by id: " + id), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MessageResponse("Successfully deleted by id: " + id), HttpStatus.OK);
     }
 }

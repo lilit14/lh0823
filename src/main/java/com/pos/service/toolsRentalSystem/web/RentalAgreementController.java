@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/rentalAgreement")
 public class RentalAgreementController {
-    @Autowired
-    RentalAgreementService rentalAgreementService;
+    @Autowired private RentalAgreementService rentalAgreementService;
 
     @GetMapping("/all")
     public ResponseEntity<List<RentalAgreement>> getAll() {
         List<RentalAgreement> rentalAgreements = rentalAgreementService.getAll();
         return new ResponseEntity<>(rentalAgreements, HttpStatus.OK);
-
     }
 
     @GetMapping("/find/{id}")
@@ -39,6 +37,7 @@ public class RentalAgreementController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") UUID id) {
         rentalAgreementService.delete(id);
-        return new ResponseEntity<>(new MessageResponse("Successfully deleted by id: " + id), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MessageResponse("Successfully deleted by id: " + id), HttpStatus.OK);
     }
 }

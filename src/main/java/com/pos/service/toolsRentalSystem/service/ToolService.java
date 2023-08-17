@@ -16,4 +16,3 @@ public interface ToolService {
 
     List<Tool> getAll();
 }
-

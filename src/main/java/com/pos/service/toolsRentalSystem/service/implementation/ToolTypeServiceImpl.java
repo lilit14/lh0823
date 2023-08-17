@@ -1,9 +1,10 @@
-package com.pos.service.toolsRentalSystem.service;
+package com.pos.service.toolsRentalSystem.service.implementation;
 
 import com.pos.service.toolsRentalSystem.data.model.ToolType;
 import com.pos.service.toolsRentalSystem.data.repository.ToolTypeRepository;
 import com.pos.service.toolsRentalSystem.exceptions.ResourceNotFoundException;
 import com.pos.service.toolsRentalSystem.payloads.request.ToolTypeRequest;
+import com.pos.service.toolsRentalSystem.service.ToolTypeService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ToolTypeServiceImpl implements ToolTypeService {
 
-    @Autowired
-    ToolTypeRepository toolTypeRepository;
+    @Autowired private ToolTypeRepository toolTypeRepository;
 
     @Override
     public ToolType create(ToolTypeRequest request) {
@@ -35,12 +35,13 @@ public class ToolTypeServiceImpl implements ToolTypeService {
 
     @Override
     public ToolType get(UUID id) throws ResourceNotFoundException {
-        return toolTypeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ToolType", "id", id));
+        return toolTypeRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("ToolType", "id", id));
     }
 
     @Override
     public List<ToolType> getAll() {
         return toolTypeRepository.findAll();
     }
-
 }

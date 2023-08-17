@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tool")
-
 public class ToolController {
-    @Autowired
-    ToolService toolService;
+    @Autowired private ToolService toolService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Tool>> getAll () {
+    public ResponseEntity<List<Tool>> getAll() {
         List<Tool> tools = toolService.getAll();
         return new ResponseEntity<>(tools, HttpStatus.OK);
     }
+
     @GetMapping("/find/{id}")
-    public ResponseEntity<Tool> get (@PathVariable("id") UUID id) {
+    public ResponseEntity<Tool> get(@PathVariable("id") UUID id) {
         Tool toolType = toolService.get(id);
         return new ResponseEntity<>(toolType, HttpStatus.OK);
     }
+
     @PostMapping("/create")
     public ResponseEntity<Tool> create(@RequestBody ToolRequest request) {
         Tool tool = toolService.create(request);
@@ -37,6 +37,7 @@ public class ToolController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") UUID id) {
         toolService.delete(id);
-        return new ResponseEntity<>(new MessageResponse("Successfully deleted by id: " +id ),HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MessageResponse("Successfully deleted by id: " + id), HttpStatus.OK);
     }
 }
